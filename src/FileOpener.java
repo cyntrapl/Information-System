@@ -1,9 +1,7 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 
 public class FileOpener {
-    FileReader openFile(String name) throws FileNotFoundException {
-        return new FileReader(new File(name)); // this doesn't work lmfao
+    RandomAccessFile openFile(String name) throws IOException {
+        return new RandomAccessFile(name, "rw"); // this "works"
     }
 }
