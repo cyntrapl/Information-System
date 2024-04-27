@@ -1,13 +1,12 @@
-package commands;
+package file_commands;
 
+import interfaces.Command;
 import singletons.CurrentFile;
 
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.FileSystemException;
 
-public class FileSave implements FileCommands {
+public class FileSave implements Command {
     private CurrentFile currentFile;
 
     public FileSave() {

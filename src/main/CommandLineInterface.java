@@ -1,6 +1,6 @@
 package main;
 
-import commands.*;
+import file_commands.*;
 
 
 import java.io.IOException;
@@ -18,13 +18,13 @@ public class CommandLineInterface {
         FileSave fileSave = new FileSave();
         FileSaveAs fileSaveAs = new FileSaveAs(scanner);
 
-
+        //TODO:put this in a different class so it's easier to add commands on the eye instead of this mess
         Map<String, Runnable> commands = new HashMap<>();
         commands.put("open", () -> {
             if (scanner.hasNext()) {
                 try {
                     fileOpen.execute();
-                } catch (IOException e) {
+                } catch (IOException e){
                     System.out.println("Error opening file: " + e);
                 }
             } else {
@@ -55,7 +55,8 @@ public class CommandLineInterface {
         });
         commands.put("exit", () -> System.exit(0));
 
-
+        //display help at start
+        helpDisplay.execute();
         while (true) {
             System.out.print("> ");
             if (scanner.hasNext()) {

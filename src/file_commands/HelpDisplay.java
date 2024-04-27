@@ -1,6 +1,8 @@
-package commands;
+package file_commands;
 
-public class HelpDisplay implements BaseCommand {
+import interfaces.Command;
+
+public class HelpDisplay implements Command {
     @Override
     public void execute(){
         System.out.println("open  <file>            | opens <file>");

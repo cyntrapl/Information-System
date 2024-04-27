@@ -1,12 +1,11 @@
-package commands;
+package file_commands;
 
+import interfaces.Command;
 import singletons.CurrentFile;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.FileSystemException;
 
-public class FileClose implements FileCommands {
+public class FileClose implements Command {
     private CurrentFile currentFile;
 
 
