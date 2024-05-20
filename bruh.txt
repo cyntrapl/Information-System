@@ -1,7 +1,0 @@
-RoomNumber: 2
-Beds: 4
-Note: Simpsons
-Guests: 4
-Booking: 2023-12-08,2023-12-10
-Available: true
-
