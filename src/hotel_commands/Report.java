@@ -44,7 +44,7 @@ public class Report implements Command {
 
 
             for(HotelRoom hotelRoom : hotel.getRooms()){
-                if (toDate.before(hotelRoom.getBooking().getFromDate()) || fromDate.after(hotelRoom.getBooking().getToDate())) {
+                if ( ( toDate.before(hotelRoom.getBooking().getFromDate()) || fromDate.after(hotelRoom.getBooking().getToDate()) && !hotelRoom.isAvailable() ) ) {
                     continue;
                 }
 

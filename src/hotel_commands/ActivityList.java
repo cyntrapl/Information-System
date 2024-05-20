@@ -23,8 +23,6 @@ public class ActivityList implements Command {
         List<HotelRoom> roomsWithActivity = new ArrayList<>();
 
         Activities chosenActivity;
-        System.out.println("Activites: ");
-
         Activities[] allActivities = Activities.values();
 
         while (true) {
@@ -50,7 +48,7 @@ public class ActivityList implements Command {
             if(room.getActivities() != null){
                 for(Activities activity : room.getActivities()){
                     if(activity.equals(chosenActivity)){
-                        System.out.println("Room " + room.getRoomNumber() + " has activity." + chosenActivity.name().replace("_", " ").toLowerCase());
+                        System.out.println("Room " + room.getRoomNumber() + " has activity " + chosenActivity.name().replace("_", " ").toLowerCase());
                         hasRooms = true;
                     }
                 }

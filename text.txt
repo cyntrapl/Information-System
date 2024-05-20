@@ -8,7 +8,7 @@ Available: true
 
 RoomNumber: 2
 Beds: 4
-Note: Simpsons
+Note: Family2
 Guests: 2
 Booking: 2024-05-10,2024-05-15
 Activities: 
@@ -16,7 +16,7 @@ Available: true
 
 RoomNumber: 3
 Beds: 2
-Note: Simpsons
+Note: Jefferson
 Guests: 2
 Booking: 2024-05-03,2024-05-10
 Activities: 
@@ -24,9 +24,9 @@ Available: true
 
 RoomNumber: 4
 Beds: 2
-Note: Simpsons
+Note: IDK
 Guests: 2
 Booking: 2024-05-15,2024-05-20
-Activities: 
+Activities: clown show, kids show
 Available: true
 
