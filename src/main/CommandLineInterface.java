@@ -1,6 +1,9 @@
 package main;
 
+import enums.Activities;
 import file_commands.*;
+import hotel_commands.*;
+import singletons.Hotel;
 
 
 import java.io.IOException;
@@ -17,6 +20,16 @@ public class CommandLineInterface {
         FileClose fileClose = new FileClose();
         FileSave fileSave = new FileSave();
         FileSaveAs fileSaveAs = new FileSaveAs(scanner);
+        CheckIn checkin = new CheckIn(scanner);
+        Checkout checkout = new Checkout(scanner);
+        Availability availability = new Availability(scanner);
+        Report report = new Report(scanner);
+        Unavailable unavailable = new Unavailable(scanner);
+        Find find = new Find(scanner);
+        FindImportant findImportant = new FindImportant(scanner);
+        ActivityList activityList = new ActivityList(scanner);
+        Hotel hotel = Hotel.getInstance();
+        hotel.getNumberOfRooms();
 
         //TODO:put this in a different class so it's easier to add commands on the eye instead of this mess
         Map<String, Runnable> commands = new HashMap<>();
@@ -53,6 +66,14 @@ public class CommandLineInterface {
                 System.out.println("Error saving file: " + e);
             }
         });
+        commands.put("checkin", checkin::execute);
+        commands.put("checkout", checkout::execute);
+        commands.put("availability", availability::execute);
+        commands.put("report", report::execute);
+        commands.put("unavailable", unavailable::execute);
+        commands.put("find", find::execute);
+        commands.put("find!", findImportant::execute);
+        commands.put("activity", activityList::execute);
         commands.put("exit", () -> System.exit(0));
 
         //display help at start
