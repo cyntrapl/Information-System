@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * responsible for the console handling
+ */
 public class CommandLineInterface {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);

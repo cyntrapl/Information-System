@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * reports usage days for a certain period of time for all rooms
+ */
 public class Report implements Command {
     private Hotel hotel;
     private Scanner scanner;

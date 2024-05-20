@@ -6,6 +6,9 @@ import singletons.Hotel;
 
 import java.util.Scanner;
 
+/**
+ * checks out a room if it's checked in
+ */
 public class Checkout implements Command {
     private Hotel hotel;
     private Scanner scanner;

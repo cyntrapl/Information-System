@@ -11,6 +11,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+/**
+ * same logic as find except if there isnt a free room it will try and figure out if it can swap rooms to free up space
+ */
 public class FindImportant implements Command {
     private Hotel hotel;
     private Scanner scanner;

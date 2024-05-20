@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+/**
+ * lists all rooms with a certain activity chosen by the user
+ */
 public class ActivityList implements Command {
     private Hotel hotel;
     private Scanner scanner;

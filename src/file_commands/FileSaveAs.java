@@ -6,6 +6,9 @@ import singletons.CurrentFile;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * saves file data in a new file
+ */
 public class FileSaveAs implements Command {
     private CurrentFile currentFile;
     private FileSave fileSave;

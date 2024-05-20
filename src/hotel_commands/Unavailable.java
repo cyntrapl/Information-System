@@ -16,6 +16,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * makes room unavailable for a period, same logic as checkin
+ */
 public class Unavailable implements Command {
     private Hotel hotel;
     private Scanner scanner;

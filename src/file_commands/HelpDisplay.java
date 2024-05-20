@@ -2,6 +2,9 @@ package file_commands;
 
 import interfaces.Command;
 
+/**
+ * displays all available commands to the user
+ */
 public class HelpDisplay implements Command {
     @Override
     public void execute(){

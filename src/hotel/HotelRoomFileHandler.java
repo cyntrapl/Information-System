@@ -12,6 +12,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * writing and reading hotel data from the file
+ */
 public class HotelRoomFileHandler {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private Hotel hotel;

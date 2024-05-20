@@ -4,6 +4,9 @@ import enums.Activities;
 
 import java.util.List;
 
+/**
+ * hotel room with all the needed data
+ */
 public class HotelRoom {
     private int roomNumber;
     private int beds;

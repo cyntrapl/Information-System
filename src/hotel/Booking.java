@@ -2,6 +2,9 @@ package hotel;
 
 import java.util.Date;
 
+/**
+ * Booking class with 2 dates, from and to
+ */
 public class Booking {
     private Date fromDate;
     private Date toDate;

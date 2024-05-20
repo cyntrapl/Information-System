@@ -12,6 +12,9 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * opens file
+ */
 public class FileOpen implements Command {
     private CurrentFile currentFile;
     private Scanner scanner;

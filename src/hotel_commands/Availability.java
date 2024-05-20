@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * available rooms at a certain date
+ */
 public class Availability implements Command {
     private Hotel hotel;
     private Scanner scanner;

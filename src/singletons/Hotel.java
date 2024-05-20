@@ -10,6 +10,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * handles the hotel and it's rooms
+ */
 public class Hotel {
     private static volatile Hotel instance;
     private List<HotelRoom> rooms;

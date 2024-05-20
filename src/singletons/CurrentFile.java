@@ -1,5 +1,8 @@
 package singletons;
 
+/**
+ * handles the currently open file
+ */
 public class CurrentFile{
     private static volatile CurrentFile instance;
 

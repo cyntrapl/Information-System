@@ -6,6 +6,9 @@ import singletons.CurrentFile;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * saves currently open file
+ */
 public class FileSave implements Command {
     private CurrentFile currentFile;
 

@@ -16,6 +16,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * checks in someone at the hotel
+ */
 public class CheckIn implements Command {
     private Hotel hotel;
     private Scanner scanner;

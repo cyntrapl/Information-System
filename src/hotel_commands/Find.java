@@ -12,6 +12,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
+/**
+ * finds a free room at a specific period if it exists
+ */
 public class Find implements Command {
     private Hotel hotel;
     private Scanner scanner;
