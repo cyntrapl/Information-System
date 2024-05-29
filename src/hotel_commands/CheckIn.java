@@ -1,20 +1,20 @@
 package hotel_commands;
 
 import enums.Activities;
+import exceptions.FileNotOpenException;
+import exceptions.InvalidNumberOfArgumentsException;
 import hotel.Booking;
 import hotel.HotelRoom;
 import hotel.HotelRoomFileHandler;
 import interfaces.Command;
+import singletons.CurrentFile;
 import singletons.Hotel;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * checks in someone at the hotel
@@ -29,17 +29,28 @@ public class CheckIn implements Command {
     private String note;
     private int guests;
     private HotelRoomFileHandler hotelRoomFileHandler;
+    private CurrentFile currentFile;
 
     public CheckIn(Scanner scanner) {
         this.hotel = Hotel.getInstance();
         this.hotelRoomFileHandler = new HotelRoomFileHandler();
         this.scanner = scanner;
+        this.currentFile = CurrentFile.getInstance();
     }
 
     @Override
-    public void execute() {
+    public void execute() throws InvalidNumberOfArgumentsException, FileNotOpenException {
+
+        if(currentFile.getCurrentFileName() == null){
+            throw new FileNotOpenException("File not open!");
+        }
+
         String inputLine = scanner.nextLine();
         String[] parts = inputLine.split(" ");
+
+        if (parts.length < 5 || parts.length > 6) {
+            throw new InvalidNumberOfArgumentsException("Invalid number of arguments for checkin command.");
+        }
 
         roomNumber = Integer.parseInt(parts[1]);
 

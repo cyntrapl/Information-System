@@ -1,6 +1,9 @@
 package main;
 
 import enums.Activities;
+import exceptions.FileNotOpenException;
+import exceptions.InvalidFileNameException;
+import exceptions.InvalidNumberOfArgumentsException;
 import file_commands.*;
 import hotel_commands.*;
 import singletons.Hotel;
@@ -40,7 +43,7 @@ public class CommandLineInterface {
             if (scanner.hasNext()) {
                 try {
                     fileOpen.execute();
-                } catch (IOException e){
+                } catch (IOException | InvalidFileNameException e){
                     System.out.println("Error opening file: " + e);
                 }
             } else {
@@ -51,32 +54,80 @@ public class CommandLineInterface {
         commands.put("close", () -> {
             try{
                 fileClose.execute();
-            }catch (IOException e){
+            }catch (IOException | FileNotOpenException e){
                 System.out.println("Error closing file: " + e);
             }
         });
         commands.put("save", () -> {
             try{
                 fileSave.execute();
-            }catch (IOException e){
+            }catch (IOException | FileNotOpenException e){
                 System.out.println("Error saving file: " + e);
             }
         });
         commands.put("saveas", () -> {
             try{
                 fileSaveAs.execute();
-            }catch (IOException e){
+            }catch (IOException | FileNotOpenException | InvalidFileNameException e){
                 System.out.println("Error saving file: " + e);
             }
         });
-        commands.put("checkin", checkin::execute);
-        commands.put("checkout", checkout::execute);
-        commands.put("availability", availability::execute);
-        commands.put("report", report::execute);
-        commands.put("unavailable", unavailable::execute);
-        commands.put("find", find::execute);
-        commands.put("find!", findImportant::execute);
-        commands.put("activity", activityList::execute);
+        commands.put("checkin", () -> {
+            try{
+                checkin.execute();
+            }catch (InvalidNumberOfArgumentsException | FileNotOpenException e){
+                System.out.println("Error: " + e);
+            }
+        });
+        commands.put("checkout", () -> {
+            try{
+                checkout.execute();
+            }catch (InvalidNumberOfArgumentsException | FileNotOpenException e){
+                System.out.println("Error: " + e);
+            }
+        });
+        commands.put("availability", () -> {
+            try{
+                availability.execute();
+            }catch (InvalidNumberOfArgumentsException | FileNotOpenException e){
+                System.out.println("Error: " + e);
+            }
+        });
+        commands.put("report", () -> {
+            try{
+                report.execute();
+            }catch (InvalidNumberOfArgumentsException | FileNotOpenException e){
+                System.out.println("Error: " + e);
+            }
+        });
+        commands.put("unavailable", () -> {
+            try{
+                unavailable.execute();
+            }catch (InvalidNumberOfArgumentsException | FileNotOpenException e){
+                System.out.println("Error: " + e);
+            }
+        });
+        commands.put("find", () -> {
+            try{
+                find.execute();
+            }catch (InvalidNumberOfArgumentsException | FileNotOpenException e){
+                System.out.println("Error: " + e);
+            }
+        });
+        commands.put("find!", () -> {
+            try{
+                findImportant.execute();
+            }catch (InvalidNumberOfArgumentsException | FileNotOpenException e){
+                System.out.println("Error: " + e);
+            }
+        });
+        commands.put("activities", () -> {
+            try{
+                findImportant.execute();
+            }catch (FileNotOpenException | InvalidNumberOfArgumentsException e){
+                System.out.println("Error: " + e);
+            }
+        });
         commands.put("exit", () -> System.exit(0));
 
         //display help at start

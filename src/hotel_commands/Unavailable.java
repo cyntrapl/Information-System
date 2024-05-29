@@ -1,10 +1,13 @@
 package hotel_commands;
 
 import enums.Activities;
+import exceptions.FileNotOpenException;
+import exceptions.InvalidNumberOfArgumentsException;
 import hotel.Booking;
 import hotel.HotelRoom;
 import hotel.HotelRoomFileHandler;
 import interfaces.Command;
+import singletons.CurrentFile;
 import singletons.Hotel;
 
 import java.io.File;
@@ -29,17 +32,28 @@ public class Unavailable implements Command {
     private String note;
     private int guests;
     private HotelRoomFileHandler hotelRoomFileHandler;
+    private CurrentFile currentFile;
 
     public Unavailable(Scanner scanner) {
         this.hotel = Hotel.getInstance();
         this.hotelRoomFileHandler = new HotelRoomFileHandler();
         this.scanner = scanner;
+        this.currentFile = CurrentFile.getInstance();
     }
 
     @Override
-    public void execute() {
+    public void execute() throws InvalidNumberOfArgumentsException, FileNotOpenException {
+
+        if(currentFile.getCurrentFileName() == null){
+            throw new FileNotOpenException("File not open!");
+        }
+
         String inputLine = scanner.nextLine();
         String[] parts = inputLine.split(" ");
+
+        if (parts.length != 5) {
+            throw new InvalidNumberOfArgumentsException("Invalid number of arguments for checkout command.");
+        }
 
         roomNumber = Integer.parseInt(parts[1]);
 
@@ -94,9 +108,5 @@ public class Unavailable implements Command {
         }else{
             System.out.println("Room already checked in!");
         }
-
-        //Bonus: Activity logic do later cuz bs
-        //List<List<String>> activities = new ArrayList<>();
-        //System.out.println("Activites: ");
     }
 }

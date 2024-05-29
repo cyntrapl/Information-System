@@ -1,5 +1,6 @@
 package file_commands;
 
+import exceptions.FileNotOpenException;
 import interfaces.Command;
 import singletons.CurrentFile;
 
@@ -17,10 +18,9 @@ public class FileSave implements Command {
     }
 
     @Override
-    public void execute() throws IOException {
+    public void execute() throws IOException, FileNotOpenException {
         if (currentFile.getCurrentFileName() == null) {
-            System.out.println("No file is currently open.");
-            return;
+            throw new FileNotOpenException("No file is currently open.");
         }
         FileWriter writer = new FileWriter(currentFile.getCurrentFileName());
         writer.write(currentFile.getFileContent().toString());

@@ -1,5 +1,6 @@
 package file_commands;
 
+import exceptions.InvalidFileNameException;
 import hotel.HotelRoomFileHandler;
 import interfaces.Command;
 import singletons.CurrentFile;
@@ -29,15 +30,14 @@ public class FileOpen implements Command {
     }
 
     @Override
-    public void execute() throws IOException {
+    public void execute() throws IOException, InvalidFileNameException {
         if(currentFile.getCurrentFileName() == null){
             String fileName = scanner.next();
             //Regex moment
             Pattern pattern = Pattern.compile(".*\\.txt$");
             Matcher matcher = pattern.matcher(fileName);
             if(!matcher.matches()){
-                System.out.println("Not a valid file (ex name.txt)");
-                return;
+                throw new InvalidFileNameException("Invalid File Name!");
             }
 
             File file = new File(fileName);

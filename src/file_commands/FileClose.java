@@ -1,5 +1,6 @@
 package file_commands;
 
+import exceptions.FileNotOpenException;
 import interfaces.Command;
 import singletons.CurrentFile;
 import singletons.Hotel;
@@ -20,8 +21,10 @@ public class FileClose implements Command {
     }
 
     @Override
-    public void execute() throws IOException {
-        if(currentFile.getCurrentFileName() == null) System.out.println("No file is open!");
+    public void execute() throws IOException, FileNotOpenException {
+        if (currentFile.getCurrentFileName() == null) {
+            throw new FileNotOpenException("No file is open!");
+        }
         else {
             currentFile.setCurrentFileName(null);
             currentFile.getFileContent().setLength(0);

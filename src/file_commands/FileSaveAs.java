@@ -1,5 +1,7 @@
 package file_commands;
 
+import exceptions.FileNotOpenException;
+import exceptions.InvalidFileNameException;
 import interfaces.Command;
 import singletons.CurrentFile;
 
@@ -20,12 +22,20 @@ public class FileSaveAs implements Command {
     }
 
     @Override
-    public void execute() throws IOException {
+    public void execute() throws IOException, FileNotOpenException, InvalidFileNameException {
         //TODO: if open doesn't work I need this to still preserve the old file instead of just outright closing it
         currentFile.setCurrentFileName(null);
         String temp = String.valueOf(currentFile.getFileContent());
-        fileOpen.execute();
+        try{
+            fileOpen.execute();
+        }catch (IOException | InvalidFileNameException e){
+            System.out.println("Error: " + e);
+        }
         currentFile.setFileContent(new StringBuilder(temp));
-        fileSave.execute();
+        try{
+            fileSave.execute();
+        }catch (IOException | FileNotOpenException e){
+            System.out.println("Error: " + e);
+        }
     }
 }

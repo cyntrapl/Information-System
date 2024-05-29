@@ -1,8 +1,10 @@
 package hotel_commands;
 
+import exceptions.FileNotOpenException;
 import hotel.HotelRoom;
 import interfaces.Command;
 import enums.Activities;
+import singletons.CurrentFile;
 import singletons.Hotel;
 
 import java.util.ArrayList;
@@ -17,16 +19,23 @@ public class ActivityList implements Command {
     private Hotel hotel;
     private Scanner scanner;
 
+    private CurrentFile currentFile;
+
     public ActivityList(Scanner scanner){
         this.hotel = Hotel.getInstance();
+        this.currentFile = CurrentFile.getInstance();
         this.scanner = scanner;
     }
 
-    public void execute() {
-        List<HotelRoom> roomsWithActivity = new ArrayList<>();
+    public void execute() throws FileNotOpenException {
+
+        if(currentFile.getCurrentFileName() == null){
+            throw new FileNotOpenException("File not open!");
+        }
 
         Activities chosenActivity;
         Activities[] allActivities = Activities.values();
+
 
         while (true) {
             System.out.println("Activities: ");
