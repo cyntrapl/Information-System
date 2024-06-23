@@ -8,5 +8,6 @@ a university assignment
 
 ## Documentation
 
-[Documentation](https://docs.google.com/document/d/e/2PACX-1vQ2yzDhfd8optLGjoBWh1gd2oMZXlFd4j_6tSqsoJhqMDRcrRhxAxwDT8bXHY5ylAV4CtE6AeFxcjTx/pub)
+[Documentation](https://docs.google.com/document/d/1aXu8zqh4JiQTXQegtLTeW5MBH_GfACwK11bGZVx8raE/edit?usp=sharing)
+[JavaDoc](https://cyntrapl.github.io/IS_JavaDoc/)
 
