@@ -1,7 +1,7 @@
 package hotel;
 
 /**
- * hotel room with all the needed data
+ * Класът HotelRoom е клас за обектите, които представляват стая в хотел.
  */
 public class HotelRoom {
     private int roomNumber;
@@ -9,6 +9,12 @@ public class HotelRoom {
     private boolean available;
     private Reservation reservation;
 
+    /**
+     * Създава нова хотелска стая с номер, брой легла и резервация.
+     * @param roomNumber номер на стаята
+     * @param beds брой легла
+     * @param reservation резервация
+     */
     public HotelRoom(int roomNumber, int beds, Reservation reservation) {
         this.roomNumber = roomNumber;
         this.beds = beds;
@@ -16,36 +22,44 @@ public class HotelRoom {
         this.available = true;
     }
 
+    /**
+     * Връща номера на стаята.
+     * @return номер на стаята
+     */
     public int getRoomNumber() {
         return roomNumber;
     }
 
-    public void setRoomNumber(int roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-
+    /**
+     * Връща броя на леглата.
+     * @return броя на леглата
+     */
     public int getBeds() {
         return beds;
     }
 
-    public void setBeds(int beds) {
-        this.beds = beds;
-    }
-
+    /**
+     * Проверява дали стаята е свободна.
+     * @return дали стаята е свободна
+     */
     public boolean isAvailable() {
         return available;
     }
 
+    /**
+     * Задава дали стаята е свободна.
+     * @param available дали стаята е свободна
+     */
     public void setAvailable(boolean available) {
         this.available = available;
     }
 
+    /**
+     * Връща резервацията на стаята.
+     * @return резервация на стаята
+     */
     public Reservation getReservation() {
         return reservation;
-    }
-
-    public void setReservation(Reservation reservation) {
-        this.reservation = reservation;
     }
 }
 

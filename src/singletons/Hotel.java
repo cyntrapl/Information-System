@@ -9,18 +9,25 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * handles the hotel and it's rooms
+ * Класът Hotel представлява хотел със стаи.
  */
 public class Hotel {
     private static volatile Hotel instance;
     private List<HotelRoom> rooms;
     private int numberOfRooms;
 
+    /**
+     * Създава нов обект Hotel.
+     */
     private Hotel() {
         rooms = new ArrayList<>();
         numberOfRooms = 0;
     }
 
+    /**
+     * Връща единствения обект на класа.
+     * @return обекта на класа
+     */
     public static Hotel getInstance() {
 
         Hotel result = instance;
@@ -35,6 +42,10 @@ public class Hotel {
         }
     }
 
+    /**
+     * Връща броя на стаите в хотела.
+     * @return броя на стаите
+     */
     public int getNumberOfRooms() {
         if(numberOfRooms == 0) {
             Scanner fileScanner = null;
@@ -53,22 +64,42 @@ public class Hotel {
         }else return numberOfRooms;
     }
 
+    /**
+     * Зарежда всички стаи в хотела.
+     * @param roomList списък с хотелски стаи
+     */
     public void loadAllRooms(List<HotelRoom> roomList) {
         rooms.addAll(roomList);
     }
 
+    /**
+     * Изчиства всички стаи в хотела.
+     */
     public void clearAllRooms() {
         rooms.clear();
     }
 
+    /**
+     * Добавя стая в хотела.
+     * @param room стая
+     */
     public void addRoom(HotelRoom room) {
         rooms.add(room);
     }
 
+    /**
+     * Връща списък с всички стаи в хотела.
+     * @return списък с хотелски стаи
+     */
     public List<HotelRoom> getRooms() {
         return rooms;
     }
 
+    /**
+     * Намира стая по номер.
+     * @param roomNumber номер на стая
+     * @return стая
+     */
     public HotelRoom findRoomByNumber(int roomNumber) {
         for (HotelRoom room : rooms) {
             if (room.getRoomNumber() == roomNumber) {
@@ -78,6 +109,10 @@ public class Hotel {
         return null;
     }
 
+    /**
+     * Премахва стая по номер.
+     * @param roomNumber номер на стая
+     */
     public void removeRoomByRoomNumber(int roomNumber) {
         rooms.removeIf(room -> room.getRoomNumber() == roomNumber);
     }

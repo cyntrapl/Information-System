@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * writing and reading hotel data from the file
+ * Класът HotelFileHandler се използва за записване и зареждане на данни за хотелски стаи във и от файл.
  */
 public class HotelFileHandler {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -21,12 +21,18 @@ public class HotelFileHandler {
     private CurrentFile currentFile;
     private List<HotelRoom> rooms;
 
+    /**
+     * Конструира нов обект HotelFileHandler.
+     */
     public HotelFileHandler() {
         this.hotel = Hotel.getInstance();
         this.currentFile = CurrentFile.getInstance();
         this.rooms = hotel.getRooms();
     }
 
+    /**
+     * Записва данните за хотелската стая в отворения в момента файл.
+     */
     public void saveRoomsToFile() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(currentFile.getCurrentFileName()))) {
             for (HotelRoom room : rooms) {
@@ -47,6 +53,10 @@ public class HotelFileHandler {
         }
     }
 
+    /**
+     * Зарежда данните за хотелската стая от отворения в момента файл.
+     * @return a list of HotelRoom objects
+     */
     public List<HotelRoom> loadRoomsFromFile() {
         List<HotelRoom> rooms = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(currentFile.getCurrentFileName()))) {
@@ -98,6 +108,11 @@ public class HotelFileHandler {
         return rooms;
     }
 
+    /**
+     * Разработва низ от дейности и връща списък с обекти Activities.
+     * @param activitiesString низът от дейности
+     * @връща списък с обекти Activities
+     */
     private List<Activities> parseActivities(String activitiesString) {
         List<Activities> activities = new ArrayList<>();
         String[] activityArray = activitiesString.split(", ");

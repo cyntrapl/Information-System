@@ -8,13 +8,18 @@ import commands.hotel_commands.*;
 
 import java.util.Scanner;
 
+/**
+ * Класът CommandLineInterface съдържа метода main, който стартира командния интерфейс на програмата.
+ */
 public class CommandLineInterface {
     public static void main(String[] args) {
+        //initialize scanner and command factory
         Scanner scanner = new Scanner(System.in);
         String command;
         CommandFactory commandFactory = new CommandFactory();
         HelpDisplay helpDisplay = new HelpDisplay(scanner);
 
+        //add commands
         commandFactory.addCommand("open", new FileOpen(scanner));
         commandFactory.addCommand("close", new FileClose(scanner));
         commandFactory.addCommand("save", new FileSave(scanner));
@@ -34,6 +39,7 @@ public class CommandLineInterface {
 
         //display help at start
         helpDisplay.displayHelp();
+        //start command loop
         while (true) {
             System.out.print("> ");
             if (scanner.hasNext()) {
