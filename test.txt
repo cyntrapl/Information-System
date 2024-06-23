@@ -1,0 +1,8 @@
+RoomNumber: 1
+Beds: 2
+Note: Hello
+Guests: 2
+Date: 2024-05-05,2024-05-08
+Activities: clown show
+Available: true
+
