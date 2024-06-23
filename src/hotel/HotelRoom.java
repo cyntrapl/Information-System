@@ -1,73 +1,51 @@
 package hotel;
 
-import enums.Activities;
-
-import java.util.List;
-
 /**
  * hotel room with all the needed data
  */
 public class HotelRoom {
     private int roomNumber;
     private int beds;
-    private List<Activities> activities;
-    private String notes;
-    private int guests;
-    private Booking bookings;
     private boolean available;
+    private Reservation reservation;
 
-    public HotelRoom(int roomNumber, int beds, String notes, Booking bookings, int guests, List<Activities> activities) {
+    public HotelRoom(int roomNumber, int beds, Reservation reservation) {
         this.roomNumber = roomNumber;
         this.beds = beds;
-        this.notes = notes;
-        this.bookings = bookings;
-        this.guests = guests;
+        this.reservation = reservation;
         this.available = true;
-        this.activities = activities;
-    }
-
-    public int  getGuest() {
-        return guests;
-    }
-
-    public Booking getBooking() {
-        return bookings;
-    }
-
-    public int getBeds() {
-        return beds;
     }
 
     public int getRoomNumber() {
         return roomNumber;
     }
 
-    public String getNote() {
-        return notes;
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
     }
 
-    public List<Activities> getActivities() {
-        return activities;
+    public int getBeds() {
+        return beds;
     }
 
-    public void setGuest(int guests) {
-        this.guests = guests;
+    public void setBeds(int beds) {
+        this.beds = beds;
     }
 
-    public void setBooking(Booking bookings) {
-        this.bookings = bookings;
-    }
-
-    public void setNote(String notes) {
-        this.notes = notes;
+    public boolean isAvailable() {
+        return available;
     }
 
     public void setAvailable(boolean available) {
         this.available = available;
     }
 
-    public boolean isAvailable() {
-        return available;
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
     }
 }
 

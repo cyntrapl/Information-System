@@ -1,13 +1,11 @@
 package singletons;
 
-import hotel.Booking;
 import hotel.HotelRoom;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Scanner;
 
 /**
@@ -82,9 +80,5 @@ public class Hotel {
 
     public void removeRoomByRoomNumber(int roomNumber) {
         rooms.removeIf(room -> room.getRoomNumber() == roomNumber);
-    }
-
-    public void removeRoom(HotelRoom room) {
-        rooms.remove(room);
     }
 }

@@ -15,16 +15,16 @@ import java.util.stream.Collectors;
 /**
  * writing and reading hotel data from the file
  */
-public class HotelRoomFileHandler {
+public class HotelFileHandler {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private Hotel hotel;
     private CurrentFile currentFile;
     private List<HotelRoom> rooms;
 
-    public HotelRoomFileHandler() {
+    public HotelFileHandler() {
         this.hotel = Hotel.getInstance();
         this.currentFile = CurrentFile.getInstance();
-        rooms = hotel.getRooms();
+        this.rooms = hotel.getRooms();
     }
 
     public void saveRoomsToFile() {
@@ -32,10 +32,10 @@ public class HotelRoomFileHandler {
             for (HotelRoom room : rooms) {
                 writer.println("RoomNumber: " + room.getRoomNumber());
                 writer.println("Beds: " + room.getBeds());
-                writer.println("Note: " + room.getNote());
-                writer.println("Guests: " + room.getGuest());
-                writer.println("Booking: " + dateFormat.format(room.getBooking().getFromDate()) + "," + dateFormat.format(room.getBooking().getToDate()));
-                writer.println("Activities: " + room.getActivities().stream()
+                writer.println("Note: " + room.getReservation().getNote());
+                writer.println("Guests: " + room.getReservation().getGuests());
+                writer.println("Date: " + dateFormat.format(room.getReservation().getFromDate()) + "," + dateFormat.format(room.getReservation().getToDate()));
+                writer.println("Activities: " + room.getReservation().getActivities().stream()
                         .map(activity -> activity.name().replace("_", " ").toLowerCase())
                         .collect(Collectors.joining(", ")));
                 writer.println("Available: " + room.isAvailable());
@@ -76,15 +76,13 @@ public class HotelRoomFileHandler {
                             int beds = Integer.parseInt(reader.readLine().split(": ")[1]);
                             String note = reader.readLine().split(": ")[1];
                             int guests = Integer.parseInt(reader.readLine().split(": ")[1]);
-                            String[] bookingParts =  reader.readLine().split(": ")[1].split(",");
-                            Date fromDate = dateFormat.parse(bookingParts[0]);
-                            Date toDate = dateFormat.parse(bookingParts[1]);
+                            String[] dateParts =  reader.readLine().split(": ")[1].split(",");
+                            Date fromDate = dateFormat.parse(dateParts[0]);
+                            Date toDate = dateFormat.parse(dateParts[1]);
                             String activitiesString = reader.readLine().substring("Activities:".length());
                             List<Activities> activities = parseActivities(activitiesString);
-                            room = new HotelRoom(roomNumber, beds, note, new Booking(fromDate, toDate), guests, activities);
-                            break;
-                        case "Available":
-                            boolean available = Boolean.parseBoolean(parts[1]);
+                            room = new HotelRoom(roomNumber, beds, new Reservation(activities, note, guests, fromDate, toDate));
+                            boolean available = Boolean.parseBoolean(reader.readLine().split(": ")[1]);
                             room.setAvailable(available);
                             break;
                     }
