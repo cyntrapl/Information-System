@@ -30,9 +30,11 @@ public class FileSave extends CommandClass {
     @Override
     public void execute() {
         //check if number of arguments is valid
-        String fileName;
+
+        String fileName = getCurrentFile().getCurrentFileName();
+
         try {
-            fileName = checkValidNumberOfArguments(1, 1)[1];
+            checkValidNumberOfArguments(1, 1);
         } catch (InvalidNumberOfArgumentsException e) {
             System.out.println("Error: " + e.getMessage());
             return;

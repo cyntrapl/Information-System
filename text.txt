@@ -2,8 +2,8 @@ RoomNumber: 1
 Beds: 2
 Note: Simpsons
 Guests: 1
-Booking: 2024-05-01,2024-05-05
-Activities:
+Date: 2024-05-01,2024-05-05
+Activities: 
 Available: true
 
 RoomNumber: 2
@@ -29,4 +29,12 @@ Guests: 2
 Date: 2024-05-15,2024-05-20
 Activities: clown show, kids show
 Available: true
+
+RoomNumber: 5
+Beds: 5
+Note: construction
+Guests: 0
+Date: 2024-04-01,2024-04-15
+Activities: 
+Available: false
 

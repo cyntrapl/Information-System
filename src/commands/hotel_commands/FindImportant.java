@@ -87,7 +87,7 @@ public class FindImportant extends HotelCommand {
         while(fileScanner.hasNextLine()) {
             roomNumber =  Integer.parseInt(fileScanner.next());
             beds = Integer.parseInt(fileScanner.next());
-            if(beds > bedsInput) potentialRooms.add(roomNumber);
+            if(beds < bedsInput) potentialRooms.add(roomNumber);
             if(beds != bedsInput) continue;;
             if(getHotel().findRoomByNumber(roomNumber) != null){
                 HotelRoom tempRoom = getHotel().findRoomByNumber(roomNumber);

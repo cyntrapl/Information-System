@@ -41,11 +41,13 @@ public class HotelFileHandler {
                 writer.println("Note: " + room.getReservation().getNote());
                 writer.println("Guests: " + room.getReservation().getGuests());
                 writer.println("Date: " + dateFormat.format(room.getReservation().getFromDate()) + "," + dateFormat.format(room.getReservation().getToDate()));
-                writer.println("Activities: " + room.getReservation().getActivities().stream()
-                        .map(activity -> activity.name().replace("_", " ").toLowerCase())
-                        .collect(Collectors.joining(", ")));
-                writer.println("Available: " + room.isAvailable());
+                if(room.getReservation().getActivities() != null){
+                    writer.println("Activities: " + room.getReservation().getActivities().stream()
+                            .map(activity -> activity.name().replace("_", " ").toLowerCase())
+                            .collect(Collectors.joining(", ")));
+                }else writer.println("Activities: ");
                 // Separate rooms with a blank line1
+                writer.println("Available: " + room.isAvailable());
                 writer.println();
             }
         } catch (IOException e) {

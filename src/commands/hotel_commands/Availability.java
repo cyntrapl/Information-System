@@ -26,6 +26,7 @@ public class Availability extends HotelCommand {
      */
     public Availability(Scanner scanner) {
         super(scanner);
+        availableRooms = new ArrayList<>();
     }
 
     /**
@@ -36,10 +37,12 @@ public class Availability extends HotelCommand {
     @Override
     public void execute() {
 
+        availableRooms.clear();
+
         //check if number of arguments is valid
         String[] parts;
         try {
-            parts = checkValidNumberOfArguments(2, 3);
+            parts = checkValidNumberOfArguments(1, 2);
         } catch (InvalidNumberOfArgumentsException e) {
             System.out.println("Error: " + e.getMessage());
             return;
@@ -83,7 +86,7 @@ public class Availability extends HotelCommand {
 
         //check if rooms are available
         for(HotelRoom hotelRoom : getHotel().getRooms()){
-            if( (date.after(hotelRoom.getReservation().getFromDate()) && date.before(hotelRoom.getReservation().getToDate()) ) || !hotelRoom.isAvailable()){
+            if(date.after(hotelRoom.getReservation().getFromDate()) && date.before(hotelRoom.getReservation().getToDate())){
                 availableRooms.remove((Integer)hotelRoom.getRoomNumber());
             }
         }

@@ -51,7 +51,7 @@ public class HelpDisplay extends CommandClass {
         System.out.println("report <from> <to>                                    | reports the usage of rooms in the specified period");
         System.out.println("find <beds> <from> <to>                               | finds a free room");
         System.out.println("find! <beds> <from> <to>                              | finds a free room allowing for swaps and wanting the exact number of beds");
-        System.out.println("unavailable <room> <from> <to>                        | make room unavailable");
+        System.out.println("unavailable <room> <from> <to> <reason>               | make room unavailable");
         System.out.println("activities <no arguments>                             | finds all rooms with selected activity from pop up menu");
     }
 }

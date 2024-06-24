@@ -85,7 +85,6 @@ public class Find extends HotelCommand {
         while(fileScanner.hasNextLine()) {
             roomNumber =  Integer.parseInt(fileScanner.next());
             beds = Integer.parseInt(fileScanner.next());
-            System.out.println(currentFreeBeds + " " + beds + " " + bedsInput);
             if(beds < bedsInput || currentFreeBeds < beds) continue;
             if(getHotel().findRoomByNumber(roomNumber) != null){
                 HotelRoom tempRoom = getHotel().findRoomByNumber(roomNumber);

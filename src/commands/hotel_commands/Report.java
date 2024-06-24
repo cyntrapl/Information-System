@@ -63,7 +63,7 @@ public class Report extends HotelCommand {
 
         //print report
         for(HotelRoom hotelRoom : getHotel().getRooms()){
-            if ( ( toDate.before(hotelRoom.getReservation().getFromDate()) || fromDate.after(hotelRoom.getReservation().getToDate()) && !hotelRoom.isAvailable() ) ) {
+            if (!hotelRoom.isAvailable()) {
                 continue;
             }
 
