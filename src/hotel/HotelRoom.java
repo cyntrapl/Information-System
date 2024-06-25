@@ -1,66 +1,65 @@
 package hotel;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
- * Класът HotelRoom е клас за обектите, които представляват стая в хотел.
+ * class HotelRoom
+ * Represents a hotel room
  */
 public class HotelRoom {
     private int roomNumber;
     private int beds;
-    private boolean available;
-    private Reservation reservation;
+    private Set<Reservation> reservations;
 
     /**
-     * Създава нова хотелска стая с номер, брой легла и резервация.
-     * @param roomNumber номер на стаята
-     * @param beds брой легла
-     * @param reservation резервация
+     * Constructor for HotelRoom
+     * @param roomNumber int object
+     * @param beds int object
      */
-    public HotelRoom(int roomNumber, int beds, Reservation reservation) {
+    public HotelRoom(int roomNumber, int beds) {
         this.roomNumber = roomNumber;
         this.beds = beds;
-        this.reservation = reservation;
-        this.available = true;
+        this.reservations = new HashSet<>();
     }
 
     /**
-     * Връща номера на стаята.
-     * @return номер на стаята
+     * Method that returns the room number
+     * @return int object
      */
     public int getRoomNumber() {
         return roomNumber;
     }
 
     /**
-     * Връща броя на леглата.
-     * @return броя на леглата
+     * Method that returns the number of beds
+     * @return int object
      */
     public int getBeds() {
         return beds;
     }
 
     /**
-     * Проверява дали стаята е свободна.
-     * @return дали стаята е свободна
+     * Method that returns the reservations
+     * @return Set object
      */
-    public boolean isAvailable() {
-        return available;
+    public Set<Reservation> getReservations() {
+        return reservations;
     }
 
     /**
-     * Задава дали стаята е свободна.
-     * @param available дали стаята е свободна
+     * Method that adds a reservation
+     * @param reservation Reservation object
      */
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public void addReservation(Reservation reservation) {
+        this.reservations.add(reservation);
     }
 
     /**
-     * Връща резервацията на стаята.
-     * @return резервация на стаята
+     * Method that removes a reservation
+     * @param reservation Reservation object
      */
-    public Reservation getReservation() {
-        return reservation;
+    public void removeReservation(Reservation reservation) {
+        this.reservations.remove(reservation);
     }
 }
-
-

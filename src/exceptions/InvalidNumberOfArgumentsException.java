@@ -1,7 +1,7 @@
 package exceptions;
 
 /**
- * Класът InvalidNumberOfArgumentsException е клас за обектите, които хвърлят грешка при невалиден брой аргументи.
+ * Exception for when a file is not open
  */
 public class InvalidNumberOfArgumentsException extends Exception {
     public InvalidNumberOfArgumentsException(String message) {

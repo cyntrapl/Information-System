@@ -4,32 +4,29 @@ import enums.Activities;
 import exceptions.FileNotOpenException;
 import exceptions.InvalidNumberOfArgumentsException;
 import hotel.HotelRoom;
+import hotel.Reservation;
 
 import java.util.Scanner;
 
 /**
- * Класът ActivityList отговаря за извеждането на всички стаи с определена дейност, избрана от потребителя.
- * Той разширява HotelCommand и пренаписва метода execute, за да извърши операцията по изброяване на дейностите.
+ * class ActivityList extends HotelCommand
+ * Command that lists all rooms that have a specific activity
  */
-public class ActivityList  extends HotelCommand {
+public class ActivityList extends HotelCommand {
 
     /**
-     * Конструира нов обект ActivityList с посочения обект Scanner.
-     * @param scanner обектът Scanner, използван за въвеждане от потребителя.
+     * Constructor for ActivityList
+     * @param scanner Scanner object used to read user input
      */
     public ActivityList(Scanner scanner){
         super(scanner);
     }
 
     /**
-     * Изпълнява операцията за изготвяне на списък с дейности.
-     * Този метод отговаря за проверката дали е отворен файл, като получава избраната от потребителя дейност,
-     * и изброяване на всички стаи, които имат избраната дейност.
+     * Method that lists all rooms that have a specific activity
      */
     @Override
     public void execute() {
-
-        //check if number of arguments is valid
         String[] parts;
         try {
             parts = checkValidNumberOfArguments(1, 1);
@@ -38,7 +35,6 @@ public class ActivityList  extends HotelCommand {
             return;
         }
 
-        //check if file is open
         try {
             checkIfFileIsOpen();
         } catch (FileNotOpenException e) {
@@ -46,7 +42,6 @@ public class ActivityList  extends HotelCommand {
             return;
         }
 
-        //get activity
         Activities chosenActivity;
         Activities[] allActivities = Activities.values();
 
@@ -68,14 +63,15 @@ public class ActivityList  extends HotelCommand {
             break;
         }
 
-        //check if rooms have activity
         boolean hasRooms = false;
         for(HotelRoom room : getHotel().getRooms()){
-            if(room.getReservation().getActivities() != null){
-                for(Activities activity : room.getReservation().getActivities()){
-                    if(activity.equals(chosenActivity)){
-                        System.out.println("Room " + room.getRoomNumber() + " has activity " + chosenActivity.name().replace("_", " ").toLowerCase());
-                        hasRooms = true;
+            for (Reservation reservation : room.getReservations()) {
+                if(reservation.getActivities() != null){
+                    for(Activities activity : reservation.getActivities()){
+                        if(activity.equals(chosenActivity)){
+                            System.out.println("Room " + room.getRoomNumber() + " has activity " + chosenActivity.name().replace("_", " ").toLowerCase() + " in reservation from " + reservation.getFromDate() + " to " + reservation.getToDate());
+                            hasRooms = true;
+                        }
                     }
                 }
             }

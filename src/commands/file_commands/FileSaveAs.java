@@ -5,16 +5,15 @@ import commands.CommandClass;
 import java.util.Scanner;
 
 /**
- * Класът FileSaveAs отговаря за записването на данните на текущия файл в нов файл.
- * Той разширява класа CommandClass и пренаписва метода execute, за да извърши операцията по запазване на файла.
+ * Command to save the current file as a new file
  */
 public class FileSaveAs extends CommandClass {
     private FileSave fileSave;
     private FileOpen fileOpen;
 
     /**
-     * Конструира нов обект FileSaveAs с посочения обект Scanner.
-     * @param scanner обектът Scanner, използван за въвеждане от потребителя.
+     * Constructor for FileSaveAs
+     * @param scanner the scanner to read input
      */
     public FileSaveAs(Scanner scanner) {
         super(scanner);
@@ -23,9 +22,7 @@ public class FileSaveAs extends CommandClass {
     }
 
     /**
-     * Изпълнява операцията за запазване на файла.
-     * Този метод отговаря за съхраняването на оригиналното съдържание на файла, като задава нулево име на текущия файл,
-     * опит за отваряне на нов файл и ако отварянето на новия файл е успешно, записва оригиналното съдържание в новия файл.
+     * Executes the command to save the current file as a new file
      */
     @Override
     public void execute() {
@@ -42,6 +39,7 @@ public class FileSaveAs extends CommandClass {
         // If opening the new file succeeds, save the content to the new file
         if (fileOpen.isFileOpen()) {
             getCurrentFile().setFileContent(new StringBuilder(originalContent));
+            System.out.println("Press enter to continue");
             fileSave.execute();
         }
     }

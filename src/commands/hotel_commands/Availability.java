@@ -3,9 +3,8 @@ package commands.hotel_commands;
 import exceptions.FileNotOpenException;
 import exceptions.InvalidNumberOfArgumentsException;
 import hotel.HotelRoom;
+import hotel.Reservation;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -13,16 +12,16 @@ import java.util.Date;
 import java.util.Scanner;
 
 /**
- * Класът Availability отговаря за проверката на наличността на стаите.
- * Той разширява HotelCommand и преписва метода execute, за да извърши операцията за проверка на наличността.
+ * class Availability extends HotelCommand
+ * Command that checks the availability of rooms for a specific date
  */
 public class Availability extends HotelCommand {
     private ArrayList<Integer> availableRooms;
     private Date date;
 
     /**
-     * Конструира нов обект Availability с посочения обект Scanner.
-     * @param scanner обектът Scanner, използван за въвеждане от потребителя.
+     * Constructor for Availability
+     * @param scanner Scanner object used to read user input
      */
     public Availability(Scanner scanner) {
         super(scanner);
@@ -30,16 +29,13 @@ public class Availability extends HotelCommand {
     }
 
     /**
-     * Изпълнява операцията за проверка на наличността.
-     * Този метод отговаря за проверката дали даден файл е отворен, като получава избраната от потребителя дата,
-     * и проверява всички стаи за наличност на избраната дата.
+     * Method that checks the availability of rooms for a specific date
      */
     @Override
     public void execute() {
 
         availableRooms.clear();
 
-        //check if number of arguments is valid
         String[] parts;
         try {
             parts = checkValidNumberOfArguments(1, 2);
@@ -48,7 +44,6 @@ public class Availability extends HotelCommand {
             return;
         }
 
-        //check if file is open
         try {
             checkIfFileIsOpen();
         } catch (FileNotOpenException e) {
@@ -56,8 +51,6 @@ public class Availability extends HotelCommand {
             return;
         }
 
-
-        //get date
         if(parts.length == 2){
             String dateString = parts[1];
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -69,29 +62,19 @@ public class Availability extends HotelCommand {
             }
         }else date = new Date();
 
-        //get available rooms
-        Scanner fileScanner = null;
-        File file = new File("rooms.txt");
-        try {
-            fileScanner = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            System.out.println("Error: " + e.getMessage());
-            return;
-        }
-
-        while(fileScanner.hasNextLine()) {
-            availableRooms.add(Integer.parseInt(fileScanner.next()));
-            fileScanner.nextLine();
-        }
-
-        //check if rooms are available
         for(HotelRoom hotelRoom : getHotel().getRooms()){
-            if(date.after(hotelRoom.getReservation().getFromDate()) && date.before(hotelRoom.getReservation().getToDate())){
-                availableRooms.remove((Integer)hotelRoom.getRoomNumber());
+            boolean isAvailable = true;
+            for (Reservation reservation : hotelRoom.getReservations()) {
+                if(date.after(reservation.getFromDate()) && date.before(reservation.getToDate())){
+                    isAvailable = false;
+                    break;
+                }
+            }
+            if(isAvailable){
+                availableRooms.add(hotelRoom.getRoomNumber());
             }
         }
 
-        //print available rooms
         System.out.println("Available rooms: ");
         for(Integer roomNumber : availableRooms){
             System.out.println(roomNumber);

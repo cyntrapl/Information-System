@@ -5,22 +5,21 @@ import exceptions.InvalidNumberOfArgumentsException;
 import java.util.Scanner;
 
 /**
- * Класът Exit е клас наследник на CommandClass и се използва за излизане от конзолата.
- * Той съдържа метода execute, който извършва излизането от конзолата.
+ * class Exit extends CommandClass and overrides the execute method
+ * Command that exits the console
  */
 public class Exit extends CommandClass{
 
     /**
-     * Конструира нов обект Exit със подаден обект Scanner.
-     * @param scanner обектът Scanner, използван за въвеждане от потребителя.
+     * Constructor for Exit
+     * @param scanner Scanner object used to read input
      */
     public Exit(Scanner scanner) {
         super(scanner);
     }
 
     /**
-     * Изпълнява операцията за излизане от конзолата.
-     * Този метод извежда съобщение за излизане и излиза от конзолата.
+     * Method that exits the console
      */
     @Override
     public void execute() {

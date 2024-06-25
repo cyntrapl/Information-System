@@ -4,16 +4,15 @@ import exceptions.FileNotOpenException;
 import exceptions.InvalidDateRangeException;
 import exceptions.InvalidNumberOfArgumentsException;
 import hotel.HotelRoom;
+import hotel.Reservation;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Scanner;
 
 /**
- * Класът Find отговаря за намирането на свободна стая.
- * Той разширява HotelCommand и преписва метода execute, за да извърши операцията за намиране на свободна стая.
+ * class Find extends HotelCommand
+ * Command that finds a room with the most beds available for a specific date
  */
 public class Find extends HotelCommand {
     private Date fromDate;
@@ -24,21 +23,18 @@ public class Find extends HotelCommand {
     private int currentFreeBeds = 0;
 
     /**
-     * Конструира нов обект Find с посочения обект Scanner.
-     * @param scanner обектът Scanner, използван за въвеждане от потребителя.
+     * Constructor for Find
+     * @param scanner Scanner object used to read user input
      */
     public Find(Scanner scanner) {
         super(scanner);
     }
 
     /**
-     * Изпълнява операцията за намиране на свободна стая.
-     * Този метод отговаря за проверката дали даден файл е отворен, като получава броя на леглата,
-     * началната и крайната дата на периода, за който се търси свободна стая.
+     * Method that finds a room with the most beds available for a specific date
      */
     @Override
     public void execute() {
-        //check if number of arguments is valid
         String[] parts;
         try {
             parts = checkValidNumberOfArguments(4, 4);
@@ -47,7 +43,6 @@ public class Find extends HotelCommand {
             return;
         }
 
-        //check if file is open
         try {
             checkIfFileIsOpen();
         } catch (FileNotOpenException e) {
@@ -55,13 +50,11 @@ public class Find extends HotelCommand {
             return;
         }
 
-        //init
         currentFreeBeds = Integer.MAX_VALUE;
         currentFreeRoomNumber = 0;
 
         int bedsInput = Integer.parseInt(parts[1]);
 
-        //get dates
         try {
             Date[] dates = parseAndValidateDatesFromParts(parts[2], parts[3]);
             fromDate = dates[0];
@@ -71,42 +64,23 @@ public class Find extends HotelCommand {
             return;
         }
 
-        //open rooms.txt file
-        Scanner fileScanner;
-        File file = new File("rooms.txt");
-        try {
-            fileScanner = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            System.out.println("Error: " + e.getMessage());
-            return;
-        }
-
-        //find room
-        while(fileScanner.hasNextLine()) {
-            roomNumber =  Integer.parseInt(fileScanner.next());
-            beds = Integer.parseInt(fileScanner.next());
-            if(beds < bedsInput || currentFreeBeds < beds) continue;
-            if(getHotel().findRoomByNumber(roomNumber) != null){
-                HotelRoom tempRoom = getHotel().findRoomByNumber(roomNumber);
-                boolean isAvailableAndRightDates = ( tempRoom.getReservation().getFromDate().after(toDate) || tempRoom.getReservation().getToDate().before(fromDate) ) ;
-                if(isAvailableAndRightDates){
-                    if (currentFreeRoomNumber == 0) {
-                        currentFreeRoomNumber = roomNumber;
-                        currentFreeBeds = getHotel().findRoomByNumber(roomNumber).getBeds();
-                    }
-                    else if(currentFreeBeds > getHotel().findRoomByNumber(roomNumber).getBeds()) {
-                        currentFreeRoomNumber = roomNumber;
-                        currentFreeBeds = getHotel().findRoomByNumber(roomNumber).getBeds();
-                    }
+        for(HotelRoom hotelRoom : getHotel().getRooms()){
+            if(hotelRoom.getBeds() < bedsInput || currentFreeBeds < hotelRoom.getBeds()) continue;
+            boolean isAvailableAndRightDates = true;
+            for (Reservation reservation : hotelRoom.getReservations()) {
+                if(!(reservation.getFromDate().after(toDate) || reservation.getToDate().before(fromDate))){
+                    isAvailableAndRightDates = false;
+                    break;
                 }
-            }else{
+            }
+            if(isAvailableAndRightDates){
                 if (currentFreeRoomNumber == 0) {
-                    currentFreeRoomNumber = roomNumber;
-                    currentFreeBeds = beds;
+                    currentFreeRoomNumber = hotelRoom.getRoomNumber();
+                    currentFreeBeds = hotelRoom.getBeds();
                 }
-                else if(currentFreeBeds > beds) {
-                    currentFreeRoomNumber = roomNumber;
-                    currentFreeBeds = beds;
+                else if(currentFreeBeds > hotelRoom.getBeds()) {
+                    currentFreeRoomNumber = hotelRoom.getRoomNumber();
+                    currentFreeBeds = hotelRoom.getBeds();
                 }
             }
         }

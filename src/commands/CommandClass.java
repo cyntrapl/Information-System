@@ -11,16 +11,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Абстрактен клас CommandClass, който имплементира интерфейса Command.
- * Този клас съдържа методи, които се използват от всички команди.
+ * Abstract class CommandClass
+ * Abstract class that implements the Command interface
  */
 public abstract class CommandClass implements Command {
     private CurrentFile currentFile;
     private Scanner scanner;
 
     /**
-     * Конструира нов обект CommandClass с посочения обект Scanner.
-     * @param scanner обектът Scanner, използван за въвеждане от потребителя.
+     * Constructor for CommandClass
+     * @param scanner Scanner object used to read user input
      */
     public CommandClass(Scanner scanner) {
         this.currentFile = CurrentFile.getInstance();
@@ -28,8 +28,8 @@ public abstract class CommandClass implements Command {
     }
 
     /**
-     * Проверява дали файлът е отворен.
-     * @throws FileNotOpenException хвърля изключение, ако файлът не е отворен.
+     * Method that checks if a file is open
+     * @throws FileNotOpenException if the file is not open
      */
     public void checkIfFileIsOpen() throws FileNotOpenException {
         if(currentFile.getCurrentFileName() == null){
@@ -38,11 +38,11 @@ public abstract class CommandClass implements Command {
     }
 
     /**
-     * Проверява дали броят на аргументите е валиден.
-     * @param min минимален брой аргументи
-     * @param max максимален брой аргументи
-     * @return масив от стрингове, съдържащи аргументите
-     * @throws InvalidNumberOfArgumentsException хвърля изключение, ако броят на аргументите не е валиден
+     * Method that checks if the number of arguments is valid
+     * @param min minimum number of arguments
+     * @param max maximum number of arguments
+     * @return String[] array containing the parts of the input line
+     * @throws InvalidNumberOfArgumentsException if the number of arguments is invalid
      */
     public String[] checkValidNumberOfArguments(int min, int max) throws InvalidNumberOfArgumentsException {
         String inputLine = scanner.nextLine();
@@ -52,6 +52,11 @@ public abstract class CommandClass implements Command {
         }else return parts;
     }
 
+    /**
+     * Method that checks if a file name is valid
+     * @param fileName String representing the file name
+     * @throws InvalidFileNameException if the file name is invalid
+     */
     public void checkIfValidFileName(String fileName) throws InvalidFileNameException {
         //regex moment
         Pattern pattern = Pattern.compile(".*\\.txt$");
@@ -62,16 +67,16 @@ public abstract class CommandClass implements Command {
     }
 
     /**
-     * Връща обекта CurrentFile.
-     * @return обекта CurrentFile
+     * Getter for currentFile
+     * @return CurrentFile object
      */
     public CurrentFile getCurrentFile() {
         return currentFile;
     }
 
     /**
-     * Връща обекта Scanner.
-     * @return обекта Scanner
+     * Getter for scanner
+     * @return Scanner object
      */
     public Scanner getScanner() {
         return scanner;

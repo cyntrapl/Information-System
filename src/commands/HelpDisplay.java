@@ -5,22 +5,21 @@ import exceptions.InvalidNumberOfArgumentsException;
 import java.util.Scanner;
 
 /**
- * Класът HelpDisplay наследява CommandClass и се използва за извеждане на информация за командите.
- * Той съдържа метода execute, който извежда информация за командите.
+ * class HelpDisplay extends CommandClass and overrides the execute method
+ * Command that displays the help menu
  */
 public class HelpDisplay extends CommandClass {
 
     /**
-     * Конструира нов обект HelpDisplay с подаден обект Scanner.
-     * @param scanner обектът Scanner, използван за въвеждане от потребителя.
+     * Constructor for HelpDisplay
+     * @param scanner Scanner object used to read input
      */
     public HelpDisplay(Scanner scanner){
         super(scanner);
     }
 
     /**
-     * Изпълнява операцията за извеждане на информация за командите.
-     * Този метод извежда информация за всички команди.
+     * Method that displays the help menu
      */
     @Override
     public void execute() {
@@ -34,7 +33,7 @@ public class HelpDisplay extends CommandClass {
     }
 
     /**
-     * Извежда информация за всички команди.
+     * Method that displays the help menu
      */
     public void displayHelp(){
         System.out.println("===============================file commands: ");

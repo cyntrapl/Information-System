@@ -9,23 +9,20 @@ import java.io.IOException;
 import java.util.Scanner;
 
 /**
- * Класът FileSave отговаря за записването на отворения в момента файл.
- * Той разширява класа CommandClass и пренаписва метода execute, за да извърши операцията по запазване на файла.
+ * Command to save a file
  */
 public class FileSave extends CommandClass {
 
     /**
-     * Конструира нов обект FileSave с посочения обект Scanner.
-     * @param scanner обектът Scanner, използван за въвеждане от потребителя.
+     * Constructor for FileSave
+     * @param scanner the scanner to read input
      */
     public FileSave(Scanner scanner) {
         super(scanner);
     }
 
     /**
-     * Изпълнява операцията за запазване на файла.
-     * Този метод отговаря за проверката дали е отворен файл, като получава името на файла,
-     * и записване на текущото съдържание на файла в него.
+     * Executes the command to save the current file
      */
     @Override
     public void execute() {

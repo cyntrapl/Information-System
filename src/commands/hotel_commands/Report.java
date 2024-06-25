@@ -3,6 +3,7 @@ package commands.hotel_commands;
 import exceptions.FileNotOpenException;
 import exceptions.InvalidNumberOfArgumentsException;
 import hotel.HotelRoom;
+import hotel.Reservation;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,29 +11,26 @@ import java.util.Date;
 import java.util.Scanner;
 
 /**
- * Класът Report отговаря за извеждането на отчет за заетостта на стаите.
- * Той разширява HotelCommand и преписва метода execute, за да извърши операцията за извеждане на отчет.
+ * class Report extends HotelCommand
+ * Command that finds a room with the most beds available for a specific date
  */
 public class Report extends HotelCommand {
     private Date fromDate;
     private Date toDate;
 
     /**
-     * Конструира нов обект Report с посочения обект Scanner.
-     * @param scanner обектът Scanner, използван за въвеждане от потребителя.
+     * Constructor for Report
+     * @param scanner Scanner object used to read user input
      */
     public Report(Scanner scanner) {
         super(scanner);
     }
 
     /**
-     * Изпълнява операцията за извеждане на отчет.
-     * Този метод отговаря за проверката дали даден файл е отворен, като получава началната и крайната дата на периода,
-     * за който се извежда отчета, и извежда отчет за заетостта на стаите за този период.
+     * Method that finds a room with the most beds available for a specific date
      */
     @Override
     public void execute() {
-        //check if number of arguments is valid
         String[] parts;
         try {
             parts = checkValidNumberOfArguments(3,3);
@@ -41,7 +39,6 @@ public class Report extends HotelCommand {
             return;
         }
 
-        //check if file is open
         try {
             checkIfFileIsOpen();
         } catch (FileNotOpenException e) {
@@ -49,7 +46,6 @@ public class Report extends HotelCommand {
             return;
         }
 
-        //get dates
         String fromDateString = parts[1];
         String toDateString = parts[2];
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -61,15 +57,16 @@ public class Report extends HotelCommand {
             return;
         }
 
-        //print report
         for(HotelRoom hotelRoom : getHotel().getRooms()){
-            if (!hotelRoom.isAvailable()) {
-                continue;
+            for (Reservation reservation : hotelRoom.getReservations()) {
+                Date overlapStart = fromDate.before(reservation.getFromDate()) ? reservation.getFromDate() : fromDate;
+                Date overlapEnd = toDate.after(reservation.getToDate()) ? reservation.getToDate() : toDate;
+                if (overlapStart.before(overlapEnd)) {
+                    if(reservation.isAvailable())
+                        System.out.println("Room " + hotelRoom.getRoomNumber() + " has a reservation from " + dateFormat.format(reservation.getFromDate()) + " to " + dateFormat.format(reservation.getToDate()) + " with note: " + reservation.getNote());
+                    else System.out.println("Room " + hotelRoom.getRoomNumber() + " is unavailable from " + dateFormat.format(reservation.getFromDate()) + " to " + dateFormat.format(reservation.getToDate()) + " with note: " + reservation.getNote());
+                }
             }
-
-            Date overlapStart = fromDate.before(hotelRoom.getReservation().getFromDate()) ? hotelRoom.getReservation().getFromDate() : fromDate;
-            Date overlapEnd = toDate.after(hotelRoom.getReservation().getToDate()) ? hotelRoom.getReservation().getToDate() : toDate;
-            System.out.println("Room " + hotelRoom.getRoomNumber() + " checked in for " + ((overlapEnd.getTime() - overlapStart.getTime()) / (1000 * 60 * 60 * 24) + 1) + " days");
         }
     }
 }

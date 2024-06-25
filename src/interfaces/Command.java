@@ -1,7 +1,7 @@
 package interfaces;
 
 /**
- * Интерфейсът Command е интерфейс за обектите, които извършват дадена команда.
+ * Interface for Command
  */
 public interface Command{
     public void execute();

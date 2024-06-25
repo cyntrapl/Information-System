@@ -3,15 +3,15 @@ package commands.hotel_commands;
 import java.util.Scanner;
 
 /**
- * Класът Unavailable отговаря за заетостта на стая.
- * Той разширява HotelCommand и преписва метода execute, за да извърши операцията за заетост на стая.
+ * The Unavailable class is used to make a room unavailable for booking.
+ * It extends the HotelCommand abstract class and implements the execute method.
  */
 public class Unavailable extends HotelCommand {
     private CheckIn checkIn;
 
     /**
-     * Конструира нов обект Unavailable с посочения обект Scanner.
-     * @param scanner обектът Scanner, използван за въвеждане от потребителя.
+     * Constructor for Unavailable
+     * @param scanner Scanner object used to read user input
      */
     public Unavailable(Scanner scanner) {
         super(scanner);
@@ -19,8 +19,7 @@ public class Unavailable extends HotelCommand {
     }
 
     /**
-     * Изпълнява операцията за заетост на стая.
-     * Този метод отговаря за проверката дали даден файл е отворен, като извиква метода execute на CheckIn.
+     * Method that makes a room unavailable for booking
      */
     @Override
     public void execute(){

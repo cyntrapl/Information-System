@@ -8,15 +8,14 @@ import singletons.Hotel;
 import java.util.Scanner;
 
 /**
- * Това е класът FileOpen.
- * Той отговаря за отварянето на файлове.
+ * Command to close the current file
  */
 public class FileClose extends CommandClass {
     private Hotel hotel;
 
     /**
-     * Това е конструкторът на класа FileOpen.
-     * @param scanner Скенерът, използван за въвеждане от потребителя.
+     * Constructor for FileClose
+     * @param scanner the scanner to read input
      */
     public FileClose(Scanner scanner) {
         super(scanner);
@@ -24,8 +23,7 @@ public class FileClose extends CommandClass {
     }
 
     /**
-     * Този метод проверява дали даден файл е отворен.
-     * @return true, ако файлът е отворен, false в противен случай.
+     * Executes the command to close the current file
      */
     @Override
     public void execute() {

@@ -1,7 +1,7 @@
 package exceptions;
 
 /**
- * Класът FileNotOpenException е клас за обектите, които хвърлят грешка при опит за работа с файл, който не е отворен.
+ * Exception for when a file is not open
  */
 public class FileNotOpenException extends Exception {
     public FileNotOpenException(String message) {

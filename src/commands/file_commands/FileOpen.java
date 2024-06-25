@@ -10,18 +10,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
-
 /**
- * Класът FileOpen отговаря за отварянето на файлове.
- * Той разширява класа CommandClass и преписва метода execute, за да извърши операцията по отваряне на файла.
+ * Command to open a file
  */
 public class FileOpen extends CommandClass {
     private HotelFileHandler hotelFileHandler;
     private Hotel hotel;
 
     /**
-     * Конструира нов обект FileOpen с посочения обект Scanner.
-     * @param scanner обектът Scanner, използван за въвеждане от потребителя.
+     * Constructor for FileOpen
+     * @param scanner the scanner to read input
      */
     public FileOpen(Scanner scanner) {
         super(scanner);
@@ -30,17 +28,15 @@ public class FileOpen extends CommandClass {
     }
 
     /**
-     * Проверява дали в момента е отворен даден файл.
-     * @return true, ако файлът е отворен, false в противен случай.
+     * Checks if a file is open
+     * @return true if a file is open, false otherwise
      */
     public boolean isFileOpen() {
         return getCurrentFile().getCurrentFileName() != null;
     }
 
     /**
-     * Изпълнява операцията за отваряне на файла.
-     * Този метод отговаря за проверката дали е отворен файл, като получава името на файла,
-     * и записване на текущото съдържание на файла в него.
+     * Checks if a file is open and throws an exception if it is not
      */
     @Override
     public void execute() {
@@ -90,7 +86,7 @@ public class FileOpen extends CommandClass {
         while (fileScanner.hasNextLine())
             getCurrentFile().getFileContent().append(fileScanner.nextLine()).append("\n");
         getCurrentFile().setCurrentFileName(fileName);
-        hotel.loadAllRooms(hotelFileHandler.loadRoomsFromFile());
+        hotelFileHandler.loadReservationsFromFile();
         System.out.println("File opened: " + fileName);
     }
 }

@@ -1,40 +1,63 @@
 RoomNumber: 1
 Beds: 2
-Note: Simpsons
-Guests: 1
-Date: 2024-05-01,2024-05-05
-Activities: 
-Available: true
+Reservation:
+    Note: Johnson
+    Guests: 2
+    Dates: 2024-01-15,2024-01-20
+    Activities: 
+    Available: true
+Reservation:
+    Note: Peterson
+    Guests: 2
+    Dates: 2024-02-15,2024-02-20
+    Activities: clown show, kids show
+    Available: true
+Reservation:
+    Note: Simpsons
+    Guests: 2
+    Dates: 2024-01-01,2024-01-10
+    Activities: 
+    Available: true
 
 RoomNumber: 2
 Beds: 4
-Note: Family2
-Guests: 2
-Date: 2024-05-10,2024-05-15
-Activities: 
-Available: true
+Reservation:
+    Note: Construction
+    Guests: 0
+    Dates: 2024-02-01,2024-02-05
+    Activities: 
+    Available: false
+Reservation:
+    Note: Petersons
+    Guests: 4
+    Dates: 2024-01-02,2024-01-06
+    Activities: cool show, clown show
+    Available: true
 
 RoomNumber: 3
-Beds: 2
-Note: Jefferson
-Guests: 2
-Date: 2024-05-03,2024-05-10
-Activities: 
-Available: true
+Beds: 3
+Reservation:
+    Note: Penev
+    Guests: 3
+    Dates: 2024-05-01,2024-05-05
+    Activities: cool show
+    Available: true
 
 RoomNumber: 4
 Beds: 2
-Note: IDK
-Guests: 2
-Date: 2024-05-15,2024-05-20
-Activities: clown show, kids show
-Available: true
+Reservation:
+    Note: Fred
+    Guests: 2
+    Dates: 2024-06-05,2024-06-15
+    Activities: clown show, kids show, cool show
+    Available: true
 
 RoomNumber: 5
 Beds: 5
-Note: construction
-Guests: 0
-Date: 2024-04-01,2024-04-15
-Activities: 
-Available: false
+Reservation:
+    Note: plumbing
+    Guests: 0
+    Dates: 2024-07-05,2024-08-15
+    Activities: 
+    Available: false
 

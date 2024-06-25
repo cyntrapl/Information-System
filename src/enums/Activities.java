@@ -1,7 +1,7 @@
 package enums;
 
 /**
- * Enum за различните видове забавления.
+ * Enum for the activities that can be performed in the hotel
  */
 public enum Activities {
     CLOWN_SHOW,

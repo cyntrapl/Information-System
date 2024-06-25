@@ -2,25 +2,26 @@ package commands.hotel_commands;
 
 import enums.Activities;
 import exceptions.FileNotOpenException;
-import exceptions.InvalidNumberOfArgumentsException;
 import exceptions.InvalidDateRangeException;
+import exceptions.InvalidNumberOfArgumentsException;
 import hotel.HotelFileHandler;
 import hotel.HotelRoom;
 import hotel.Reservation;
-import java.io.File;
-import java.io.FileNotFoundException;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+
+import static hotel.HotelFileHandler.dateFormat;
 
 /**
- * Класът Checkin отговаря за настаняването на гостите в стаите.
- * Той разширява HotelCommand и преписва метода execute, за да извърши операцията за настаняване.
+ * class CheckIn extends HotelCommand
+ * Command that checks in a guest in a room
  */
 public class CheckIn extends HotelCommand {
-    private Scanner fileScanner;
     private int roomNumber;
     private Date fromDate;
     private Date toDate;
@@ -30,8 +31,8 @@ public class CheckIn extends HotelCommand {
     private List<Activities> activities;
 
     /**
-     * Конструира нов обект CheckIn с посочения обект Scanner.
-     * @param scanner обектът Scanner, използван за въвеждане от потребителя.
+     * Constructor for CheckIn
+     * @param scanner Scanner object used to read user input
      */
     public CheckIn(Scanner scanner) {
         super(scanner);
@@ -39,14 +40,10 @@ public class CheckIn extends HotelCommand {
     }
 
     /**
-     * Изпълнява операцията за настаняване с опция за маркиране на стаята като недостъпна.
-     * Този метод е отговорен за проверка дали е отворен файл, получаване на избраната от потребителя стая и данни за госта,
-     * и настаняване на госта в избраната стая. Ако параметърът isUnavailableCommand е true, стаята се маркира като недостъпна.
-     * @param isUnavailableCommand булева стойност, показваща дали стаята трябва да бъде маркирана като недостъпна.
+     * Method that checks in a guest in a room
+     * @param isUnavailableCommand boolean that indicates if the command is for checking in or making a room unavailable
      */
     public void execute(boolean isUnavailableCommand) {
-
-        //check if number of arguments is valid
         String[] parts;
         try {
             if(!isUnavailableCommand) parts = checkValidNumberOfArguments(5, 6);
@@ -56,7 +53,6 @@ public class CheckIn extends HotelCommand {
             return;
         }
 
-        //check if file is open
         try {
             checkIfFileIsOpen();
         } catch (FileNotOpenException e) {
@@ -64,31 +60,13 @@ public class CheckIn extends HotelCommand {
             return;
         }
 
-        //get room number
         roomNumber = Integer.parseInt(parts[1]);
-        if(getHotel().findRoomByNumber(roomNumber) != null) {System.out.println("Room already checked in!");};
-
-        File file = new File("rooms.txt");
-        try {
-            fileScanner = new Scanner(file);
-        } catch (FileNotFoundException e) {
-            System.out.println("Error: " + e.getMessage());
+        HotelRoom room = getHotel().findRoomByNumber(roomNumber);
+        if(room == null) {
+            System.out.println("Room not found!");
             return;
         }
 
-        if(roomNumber > getHotel().getNumberOfRooms()){System.out.println("Invalid room number!"); return;};
-
-        //get beds
-        int beds = 0;
-        while(fileScanner.hasNextLine()) {
-            if(Integer.parseInt(fileScanner.next()) == roomNumber) {
-                beds = Integer.parseInt(fileScanner.next());
-            }else{
-                fileScanner.nextLine();
-            }
-        }
-
-        //get dates
         try {
             Date[] dates = parseAndValidateDatesFromParts(parts[2], parts[3]);
             fromDate = dates[0];
@@ -98,18 +76,24 @@ public class CheckIn extends HotelCommand {
             return;
         }
 
-        //get note
+        // check for overlapping reservations
+        for (Reservation existingReservation : room.getReservations()) {
+            if (!(existingReservation.getToDate().before(fromDate) || existingReservation.getFromDate().after(toDate))) {
+                System.out.println("Error: There is an overlapping reservation for this room and date range.");
+                return;
+            }
+        }
+
         note = parts[4];
-        //get guests and activities
         if (!isUnavailableCommand) {
             if(parts.length > 5){
                 guests = Integer.parseInt(getScanner().next());
             }else{
-                guests = beds;
+                guests = room.getBeds();
             }
 
             activities = new ArrayList<>();
-            System.out.println("Activites: ");
+            System.out.println("Activities: ");
 
             Activities[] allActivities = Activities.values();
 
@@ -119,14 +103,20 @@ public class CheckIn extends HotelCommand {
                     System.out.println((i + 1) + ". " + allActivities[i].name().replace("_", " ").toLowerCase());
                 }
                 System.out.println((allActivities.length + 1) + ". none");
-
+                System.out.println("Selected activities: " + activities.stream().map(a -> a.name().replace("_", " ").toLowerCase()).collect(Collectors.joining(", ")));
                 System.out.print("Select an activity (or 'none' to finish): ");
                 int choice = getScanner().nextInt();
 
                 if (choice == allActivities.length + 1) {
                     break;
                 } else if (choice > 0 && choice <= allActivities.length) {
-                    activities.add(allActivities[choice - 1]);
+                    Activities selectedActivity = allActivities[choice - 1];
+                    if (activities.contains(selectedActivity)) {
+                        activities.remove(selectedActivity);
+                        System.out.println("Removed activity: " + selectedActivity.name().replace("_", " ").toLowerCase());
+                        continue;
+                    }
+                    activities.add(selectedActivity);
                 } else {
                     System.out.println("Invalid choice. Please try again.");
                 }
@@ -134,22 +124,27 @@ public class CheckIn extends HotelCommand {
 
             System.out.println("Selected activities: " + activities);
         }
-        //create reservation and add room
-         HotelRoom room = new HotelRoom(
-            roomNumber,
-            beds,
-            new Reservation(activities, note, guests, fromDate, toDate));
-        getHotel().addRoom(room);
-        if(isUnavailableCommand) room.setAvailable(false);
-        hotelFileHandler.saveRoomsToFile();
+        Reservation reservation = new Reservation(activities, note, guests, fromDate, toDate);
+
+        // Add a prompt to confirm checkout
+        if(!isUnavailableCommand) System.out.println("Reservation from " + dateFormat.format(reservation.getFromDate()) + " to " + dateFormat.format(reservation.getToDate()) + " for room " + roomNumber + " with Note: " + note + ". Do you want to proceed with the command? (yes/no)");
+        else System.out.println("Unavailable from " + dateFormat.format(reservation.getFromDate()) + " to " + dateFormat.format(reservation.getToDate()) + " for room " + roomNumber + " with Note: " + note + ". Do you want to proceed with the command? (yes/no)");
+        String confirmation = getScanner().next();
+        if (!confirmation.equalsIgnoreCase("yes")) {
+            if(!isUnavailableCommand) System.out.println("Checkin cancelled.");
+            else System.out.println("Unavailable cancelled.");
+            return;
+        }
+
+        room.addReservation(reservation);
+        if(isUnavailableCommand) reservation.setAvailable(false);
+        hotelFileHandler.saveReservationsToFile();
         if(!isUnavailableCommand) System.out.println("Successfully checked in " + roomNumber + " from " + fromDate + " to " + toDate);
         else System.out.println("Room " + roomNumber + " is now unavailable for the period from " + fromDate + " to " + toDate + " for reason: " + note);
     }
 
     /**
-     * Изпълнява операцията за регистрация.
-     * Този метод е отговорен за проверка дали е отворен файл, получаване на избраната от потребителя стая и данни за госта,
-     * и настаняване на госта в избраната стая. Стаята не се маркира като недостъпна.
+     * Method that checks in a guest in a room
      */
     @Override
     public void execute(){

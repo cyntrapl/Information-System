@@ -1,16 +1,15 @@
 package singletons;
 
 /**
- * Класът CurrentFile е сингълтън клас, който съдържа информация за текущо отворения файл.
+ * Singleton class for the current file
  */
 public class CurrentFile{
     private static volatile CurrentFile instance;
-
     private String currentFileName;
     private StringBuilder fileContent;
 
     /**
-     * Създава нов обект CurrentFile.
+     * Constructor for the CurrentFile class
      */
     private CurrentFile() {
         this.currentFileName = null;
@@ -18,8 +17,8 @@ public class CurrentFile{
     }
 
     /**
-     * Връща единствения обект на класа.
-     * @return обекта на класа
+     * Gets the instance of the CurrentFile class
+     * @return the instance of the CurrentFile class
      */
     public static CurrentFile getInstance() {
 
@@ -35,33 +34,34 @@ public class CurrentFile{
         }
     }
 
+
     /**
-     * Връща името на текущия файл.
-     * @return името на текущия файл
+     * Gets the current file name
+     * @return the current file name
      */
     public String getCurrentFileName() {
         return currentFileName;
     }
 
     /**
-     * Връща съдържанието на текущия файл.
-     * @return съдържанието на текущия файл
+     * Gets the content of the file
+     * @return the content of the file
      */
     public StringBuilder getFileContent() {
         return fileContent;
     }
 
     /**
-     * Задава името на текущия файл.
-     * @param currentFileName името на текущия файл
+     * Sets the current file name
+     * @param currentFileName the current file name
      */
     public void setCurrentFileName(String currentFileName) {
         this.currentFileName = currentFileName;
     }
 
     /**
-     * Задава съдържанието на текущия файл.
-     * @param fileContent съдържанието на текущия файл
+     * Sets the content of the file
+     * @param fileContent the content of the file
      */
     public void setFileContent(StringBuilder fileContent) {
         this.fileContent = fileContent;
